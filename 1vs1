@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Sortowanie JSON</title>
+</head>
+<body>
+    <div id="output"></div>
+    <div id="diagnostics"></div>
+
+    <script>
+        // Adres URL do danych JSON
+        const url = 'https://cors-anywhere.herokuapp.com/https://bubbleam.pl/1v1'; 
+	//const url = 'https://bubbleam.pl/1v1';   
+
+        // Funkcja do wyświetlania komunikatów diagnostycznych
+        function logMessage(message) {
+            const diagnosticsDiv = document.getElementById('diagnostics');
+            const messageElement = document.createElement('p');
+            messageElement.textContent = message;
+            diagnosticsDiv.appendChild(messageElement);
+        }
+
+        // Pobieranie danych z zewnętrznego źródła
+        fetch(url)
+            .then(response => {
+                logMessage('Odpowiedź z serwera: ' + response.status);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(text => {
+                logMessage('Pobrany tekst: ' + text);
+                try {
+                    // Parsowanie tekstu jako JSON
+                    const data = JSON.parse(text);
+                    logMessage('Parsowane dane: ' + JSON.stringify(data));
+
+                    // Sortowanie danych według liczby wygranych
+                    data.sort((a, b) => b.wins - a.wins);
+
+                    // Wyświetlanie posortowanych danych
+                    const outputDiv = document.getElementById('output');
+	  let counter = 1;
+                    data.forEach(item => {
+                        const line = document.createElement('p');
+                        line.textContent = `${counter}. ${item.name}: ${item.wins}`;
+                        outputDiv.appendChild(line);
+	      counter++;
+                    });
+                } catch (error) {
+                    logMessage('Błąd parsowania JSON: ' + error);
+                }
+            })
+            .catch(error => logMessage('Błąd: ' + error.message));
+    </script>
+</body>
+</html>
