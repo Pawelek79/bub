@@ -22,7 +22,7 @@
         }
 
         // Pobieranie danych z zewnętrznego źródła
-        fetch(url)
+        fetch(url, {mode: 'cors'})
             .then(response => {
                 logMessage('Odpowiedź z serwera: ' + response.status);
                 if (!response.ok) {
