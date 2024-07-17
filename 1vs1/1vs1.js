@@ -55,5 +55,5 @@ function pobierzIDaneIZewnetrznegoZrodla() {
 }
 
 // Wywołaj funkcję co minutę
-setInterval(pobierzIDaneIZewnetrznegoZrodla, 60000);
+setInterval(pobierzIDaneIZewnetrznegoZrodla, 10000);
 
