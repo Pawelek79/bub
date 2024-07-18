@@ -7,7 +7,7 @@ const data = [
 
 // Funkcja pobierająca dane z zewnętrznego źródła
 function pobierzIDaneIZewnetrznegoZrodla() {
-    const url = 'https://cors-anywhere.herokuapp.com/https://bubbleam.pl/1v1'; // Zmień na właściwy adres URL
+    const url = 'https://api.codetabs.com/v1/proxy?quest=https://bubbleam.pl/1v1'; // Zmień na właściwy adres URL
     fetch(url)
         .then(response => {
             if (!response.ok) {
@@ -24,14 +24,14 @@ function pobierzIDaneIZewnetrznegoZrodla() {
                     if (player.wins > existingPlayer.wins) {
                         const difference = player.wins - existingPlayer.wins;
                         const existime = existingPlayer.additionalWins[existingPlayer.additionalWins.length - 1][0];
-                        existingPlayer.additionalWins.push([Math.trunc(Date.now() / 60000) - existime, difference]);
+                        existingPlayer.additionalWins.push([Math.trunc(Date.now() / 1000) - existime, difference]);
                     }
                     existingPlayer.wins = player.wins;
                 } else {
                     data.push({
                         name: player.name,
                         wins: player.wins,
-                        additionalWins: [[Math.trunc(Date.now() / 60000), player.wins]],
+                        additionalWins: [[Math.trunc(Date.now() / 1000), player.wins]],
                     });
                 }
             });
@@ -40,6 +40,7 @@ function pobierzIDaneIZewnetrznegoZrodla() {
             // Wyświetlanie posortowanych danych
             const outputDiv = document.getElementById('output'); 
             outputDiv.innerHTML = ''; // Wyczyść poprzednie dane
+            outputDiv.textContent = new Date().toLocaleTimeString();  //Wyświetlanie aktualnego czasu
             data.forEach((player, index) => {
                 const line = document.createElement('p');
                 //const additionalWinsText = player.additionalWins.map(win => `${win[0]} (${win[1]}) +${win[2]}`).join(', ');
