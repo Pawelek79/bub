@@ -45,7 +45,7 @@ function pobierzIDaneIZewnetrznegoZrodla() {
         })
         .catch(error => console.error('Błąd: ' + error.message));
 }
-
+    pobierzIDaneIZewnetrznegoZrodla();
 // Wywołaj funkcję co minutę
 setInterval(pobierzIDaneIZewnetrznegoZrodla, 10000);
 
