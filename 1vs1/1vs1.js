@@ -38,7 +38,7 @@ function pobierzIDaneIZewnetrznegoZrodla() {
                         const additionalWinsText = existingPlayer.additionalWins
                             .map(win => `(${new Date(win[0] * 1000).toLocaleTimeString()}, ${win[1]} +${win[2]})`)
                             .join(",  ");
-                        updateInfo.textContent = `${new Date().toLocaleTimeString()} ,${existingPlayer.name}, Wygrane: ${existingPlayer.wins}`; //, Nowe wygrane: +${winDifference}, ${additionalWinsText}`;
+                        updateInfo.textContent = `${new Date().toLocaleTimeString()}, ${existingPlayer.name}, Wygrane: ${existingPlayer.wins}`; //, Nowe wygrane: +${winDifference}, ${additionalWinsText}`;
                         diagnosticsDiv.appendChild(updateInfo);
 
                         /*
