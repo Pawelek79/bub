@@ -31,14 +31,14 @@ function pobierzIDaneIZewnetrznegoZrodla() {
                         ]);
 
                         //Wyświetlanie zaktualizowanego gracza
-                        const timeInfo = document.createElement("p");
-                        timeInfo.textContent = `Aktualna godzina: ${new Date().toLocaleTimeString()}`;
-                        diagnosticsDiv.appendChild(timeInfo);
+                        //const timeInfo = document.createElement("p");
+                        //timeInfo.textContent = `Aktualna godzina: ${new Date().toLocaleTimeString()}`;
+                        //diagnosticsDiv.appendChild(timeInfo);
                         const updateInfo = document.createElement("p");
                         const additionalWinsText = existingPlayer.additionalWins
                             .map(win => `(${new Date(win[0] * 1000).toLocaleTimeString()}, ${win[1]} +${win[2]})`)
                             .join(",  ");
-                        updateInfo.textContent = `Zaktualizowano: ${existingPlayer.name}, Wygrane: ${existingPlayer.wins}, Nowe wygrane: +${winDifference}, ${additionalWinsText}`;
+                        updateInfo.textContent = `${new Date().toLocaleTimeString()},${existingPlayer.name}, Wygrane: ${existingPlayer.wins}`; //, Nowe wygrane: +${winDifference}, ${additionalWinsText}`;
                         diagnosticsDiv.appendChild(updateInfo);
 
                         /*
