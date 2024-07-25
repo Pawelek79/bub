@@ -38,7 +38,7 @@ function pobierzIDaneIZewnetrznegoZrodla() {
                         const additionalWinsText = existingPlayer.additionalWins
                             .map(win => `(${new Date(win[0] * 1000).toLocaleTimeString()}, ${win[1]} +${win[2]})`)
                             .join(",  ");
-                        updateInfo.textContent = `${new Date().toLocaleTimeString()},${existingPlayer.name}, Wygrane: ${existingPlayer.wins}`; //, Nowe wygrane: +${winDifference}, ${additionalWinsText}`;
+                        updateInfo.textContent = `${new Date().toLocaleTimeString()} ,${existingPlayer.name}, Wygrane: ${existingPlayer.wins}`; //, Nowe wygrane: +${winDifference}, ${additionalWinsText}`;
                         diagnosticsDiv.appendChild(updateInfo);
 
                         /*
@@ -111,7 +111,7 @@ pobierzIDaneIZewnetrznegoZrodla();
 setInterval(pobierzIDaneIZewnetrznegoZrodla, 10000);
 
 const data = [
-    { name: "Siomek101", wins: 1, additionalWins: [[1721454000, 0, 0]] },
+    { name: "Siomek101", wins: 2, additionalWins: [[1721454000, 0, 0]] },
     { name: "jherson", wins: 149, additionalWins: [[1721454000, 0, 0]] },
     { name: "Alesus", wins: 13, additionalWins: [[1721454000, 0, 0]] },
     { name: "ZlAnonymuslZ", wins: 62, additionalWins: [[1721454000, 0, 0]] },
