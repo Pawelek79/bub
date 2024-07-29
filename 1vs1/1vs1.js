@@ -30,7 +30,7 @@ function pobierzIDaneIZewnetrznegoZrodla() {
 
                         //Wysłanie powiadomienia
                         sendNotification('Kolejna wygrana', {
-                        body: 'Gracz ${player.name} wygrał ${winDifference} meczy',
+                        body: `Gracz ${player.name} wygrał ${winDifference} meczy`,
                         tag: 'example notify'
                         });
                         //Wyświetlanie zaktualizowanego gracza    
