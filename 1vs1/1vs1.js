@@ -102,7 +102,7 @@ function sendNotification(title, options) {
 
 //Rejestracja serwiceWorker
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worer.js').then(registration => {
+    navigator.serviceWorker.register('service-worker.js').then(registration => {
         console.log('Service Worker zarejestrowany z zakresem', registration.scope);
     }).catch(error => {
         console.log('Rejestracja Service Workera nie powiodła się:', error);
