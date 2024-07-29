@@ -87,7 +87,7 @@ function requestNotificationPermission() {
 
 //Funkcja do wysyłania powiadomienia
 function sendNotification(title, options) {
-    if (Notificatin.permission === 'granted') {
+    if (Notification.permission === 'granted') {
         if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {       //czy Serice Worker jest zarejestrowany
             navigator.serviceWorker.ready.then(registration => {            //wysyłamy powiadomienie przez serwiceWorker
                 registration.showNotification(title, options);
