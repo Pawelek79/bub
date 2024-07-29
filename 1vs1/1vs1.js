@@ -28,7 +28,12 @@ function pobierzIDaneIZewnetrznegoZrodla() {
                             winDifference
                         ]);
 
-                        //Wyświetlanie zaktualizowanego gracza              
+                        //Wysłanie powiadomienia
+                        sendNotification('Kolejna wygrana', {
+                        body: 'Gracz ${player.name} wygrał ${winDifference} meczy',
+                        tag: 'example notify'
+                        });
+                        //Wyświetlanie zaktualizowanego gracza    
                         const updateInfo = document.createElement("p");                      
                         updateInfo.textContent = `${new Date().toLocaleTimeString()}, ${ existingPlayer.name }, Wygrane: ${ existingPlayer.wins } ` //, Nowe wygrane: +${winDifference}, ${additionalWinsText}`;
                         diagnosticsDiv.appendChild(updateInfo);                       
@@ -51,10 +56,6 @@ function pobierzIDaneIZewnetrznegoZrodla() {
             data.sort((a, b) => b.wins - a.wins);
 
             // Wyświetlanie posortowanych danych
-            sendNotification('Powiadomienie', {
-                body: 'To jest powiadomienie',
-                tag: 'example notify'
-            });
             const outputDiv = document.getElementById("output");
             outputDiv.innerHTML = "";                                   // Wyczyść poprzednie dane
             outputDiv.textContent = new Date().toLocaleTimeString();    //Wyświetlanie aktualnego czasu
