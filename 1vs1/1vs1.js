@@ -116,7 +116,7 @@ pobierzIDaneIZewnetrznegoZrodla();
 setInterval(pobierzIDaneIZewnetrznegoZrodla, 10000);
 
 const data = [
-    { name: "Siomek101", wins: 1, additionalWins: [[1721454000, 0, 0]] },
+    { name: "Siomek101", wins: 2, additionalWins: [[1721454000, 0, 0]] },
     { name: "jherson", wins: 149, additionalWins: [[1721454000, 0, 0]] },
     { name: "Alesus", wins: 13, additionalWins: [[1721454000, 0, 0]] },
     { name: "ZlAnonymuslZ", wins: 62, additionalWins: [[1721454000, 0, 0]] },
