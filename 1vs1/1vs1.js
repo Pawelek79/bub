@@ -1,102 +1,65 @@
 // Funkcja pobierająca dane z zewnętrznego źródła
 function pobierzIDaneIZewnetrznegoZrodla() {
-    const url = "https://api.codetabs.com/v1/proxy?quest=https://bubbleam.pl/1v1"; // Zmień na właściwy adres URL
+    const url = "https://api.codetabs.com/v1/proxy?quest=https://bubbleam.pl/1v1"; // Adres pobierania danych
     fetch(url)
         .then(response => {
             if (!response.ok) {
                 throw new Error("Network response was not ok");
             }
-            return response.text();
+            return response.text();                                     //dane do text
         })
         .then(text => {
-            const newData = JSON.parse(text);
+            const newData = JSON.parse(text);                               
             const diagnosticsDiv = document.getElementById("diagnostics");
-            newData.forEach(player => {
-                
-                const existingPlayer = data.find(item => item.name === player.name);
-                if (existingPlayer) {
-                    // Sprawdź, czy nowe wygrane są większe niż aktualne
-                    if (player.wins > existingPlayer.wins) {
+            newData.forEach(player => {               
+                const existingPlayer = data.find(item => item.name === player.name);    //Porównywanie nowych danych z bazą data
+                if (existingPlayer) {                   
+                    if (player.wins > existingPlayer.wins) {                 // Sprawdź, czy nowe wygrane są większe niż aktualne
                         const winDifference = player.wins - existingPlayer.wins;
                         const currentTime = Math.trunc(Date.now() / 1000);
-                        const lastWinTime =
+                        const lastWinTime =                                            //czas ostatniej wygranej
                             existingPlayer.additionalWins[
                             existingPlayer.additionalWins.length - 1
                             ][0];
-                        const timeSinceLastWin = currentTime - lastWinTime;
-                        existingPlayer.additionalWins.push([
+                        const timeSinceLastWin = currentTime - lastWinTime;             //czas od ostatniej wygranej
+                        existingPlayer.additionalWins.push([                            // aktualizowanie tablicy dodatkowych wygranych 
                             currentTime,
                             timeSinceLastWin,
                             winDifference
                         ]);
 
-                        //Wyświetlanie zaktualizowanego gracza
-                        //const timeInfo = document.createElement("p");
-                        //timeInfo.textContent = `Aktualna godzina: ${new Date().toLocaleTimeString()}`;
-                        //diagnosticsDiv.appendChild(timeInfo);
-                        const updateInfo = document.createElement("p");
-                        const additionalWinsText = existingPlayer.additionalWins
-                            .map(win => `(${new Date(win[0] * 1000).toLocaleTimeString()}, ${win[1]} +${win[2]})`)
-                            .join(",  ");
-                        updateInfo.textContent = `${new Date().toLocaleTimeString()}, ${existingPlayer.name}, Wygrane: ${existingPlayer.wins}`; //, Nowe wygrane: +${winDifference}, ${additionalWinsText}`;
-                        diagnosticsDiv.appendChild(updateInfo);
-
-                        /*
-                        //Wyświetlanie zaktualizowanego gracza
-                        const outputDiag = document.getElementById("diagnostics");
-                        outputDiag.textContent = new Date().toLocaleTimeString();
-                        const updateInfo = document.createElement("p");
-                        const additionalWinsText = existingPlayer.additionalWins
-                            .map(win => `(${win[1]} +${win[2]})`)
-                            .join(",  ");
-                        updateInfo.textContent = `${player.name}: ${player.wins} ${additionalWinsText}`;
-                        outputDiag.appendChild(updateInfo);
-                         */
+                        //Wyświetlanie zaktualizowanego gracza              
+                        const updateInfo = document.createElement("p");                      
+                        updateInfo.textContent = `${new Date().toLocaleTimeString()}, ${ existingPlayer.name }, Wygrane: ${ existingPlayer.wins } ` //, Nowe wygrane: +${winDifference}, ${additionalWinsText}`;
+                        diagnosticsDiv.appendChild(updateInfo);                       
                     }
+
                     existingPlayer.wins = player.wins;
-                } else {
-                    data.push({
+                } else {                                            //jeśli gracza nie ma w bazie
+                    data.push({                                     //dopisujemy go
                         name: player.name,
                         wins: player.wins,
                         additionalWins: [[Math.trunc(Date.now() / 1000), 0, player.wins]]
                     });
-             
 
                     //Wyświetlanie dodanego gracza
-                    const timeInfo = document.createElement("p");
-                    timeInfo.textContent = `Aktualna godzina: ${new Date().toLocaleTimeString()}`;
-                    diagnosticsDiv.appendChild(timeInfo);
                     const addInfo = document.createElement("p");
-                    /*
-                    const additionalWinsT= player.additionalWins      // ???Nie ma jeszcze additional wins?
-                        .map(win => `(${win[1]} +${win[2]})`)
-                        .join(",  "); */
-                    addInfo.textContent = `Dodano nowego gracza: ${player.name}, Wygrane: ${player.wins}`;
-                    diagnosticsDiv.appendChild(addInfo);
-                    
-                    /*
-                    //Wyświetlanie dodanego gracza
-                    const outputDiag = document.getElementById("diagnostics");
-                    outputDiag.textContent = new Date().toLocaleTimeString();
-                    const addInfo = document.createElement("p");
-                    const additionalWinsText = player.additionalWins
-                        .map(win => `(${win[1]} +${win[2]})`)
-                        .join(",  ");
-                    addInfo.textContent = `${player.name}: ${player.wins
-                        } ${additionalWinsText}`;
-                    outputDiag.appendChild(addInfo);
-                    */
+                    addInfo.textContent = `N: ${new Date().toLocaleTimeString()}, ${player.name}, Wygrane: ${player.wins}`;
+                    diagnosticsDiv.appendChild(addInfo);                                  
                 }
             });
             data.sort((a, b) => b.wins - a.wins);
 
             // Wyświetlanie posortowanych danych
+            sendNotification('Powiadomienie', {
+                body: 'To jest powiadomienie',
+                tag: 'example notify'
+            });
             const outputDiv = document.getElementById("output");
-            outputDiv.innerHTML = ""; // Wyczyść poprzednie dane
-            outputDiv.textContent = new Date().toLocaleTimeString(); //Wyświetlanie aktualnego czasu
+            outputDiv.innerHTML = "";                                   // Wyczyść poprzednie dane
+            outputDiv.textContent = new Date().toLocaleTimeString();    //Wyświetlanie aktualnego czasu
             data.forEach((player, index) => {
                 const line = document.createElement("p");
-                //const additionalWinsText = player.additionalWins.map(win => `${win[0]} (${win[1]}) +${win[2]}`).join(', ');
                 const additionalWinsText = player.additionalWins
                     .map(win => `(${new Date(win[0]*1000).toLocaleTimeString()}, ${win[1]} +${win[2]})`)
                     .join(",  ");
@@ -106,6 +69,47 @@ function pobierzIDaneIZewnetrznegoZrodla() {
         })
         .catch(error => console.error("Błąd: " + error.message));
 }
+
+//Funkcja do proszenia o pozwolenie na powiadomienia
+function requestNotificationPermission() {
+    if (!("Notification" in window)) {          //Sprawdzamy czy przeglądarka obsługuje powiadomienia
+        console.log("Ta przeglądarka nie obsługuje powiadomień");
+        return;
+    }
+    Notification.requestPermission().then(permission => {       //Prośba o pozwolenie
+        if (permission === 'granted') {
+            console.log("Pozwolenie na powiadomienia zostało udzielone");
+        } else {
+            console.log("Pozwolenie na powiadomienia zostało odrzucone")
+        }
+    });
+}
+
+//Funkcja do wysyłania powiadomienia
+function sendNotification(title, options) {
+    if (Notificatin.permission === 'granted') {
+        if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {       //czy Serice Worker jest zarejestrowany
+            navigator.serviceWorker.ready.then(registration => {            //wysyłamy powiadomienie przez serwiceWorker
+                registration.showNotification(title, options);
+            });
+        } else {                //Jeśli serwiceWorker niedostępny to używamy standardowego API powiadomień
+            new Notification(title, options);
+        }
+    } else {
+        console.log("Brak pozwolenia na wysyłanie powiadomień");
+    }
+}
+
+//Rejestracja serwiceWorker
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worer.js').then(registration => {
+        console.log('Service Worker zarejestrowany z zakresem', registration.scope);
+    }).catch(error => {
+        console.log('Rejestracja Service Workera nie powiodła się:', error);
+    });
+}
+
+requestNotificationPermission();
 pobierzIDaneIZewnetrznegoZrodla();
 // Wywołaj funkcję co minutę
 setInterval(pobierzIDaneIZewnetrznegoZrodla, 10000);
